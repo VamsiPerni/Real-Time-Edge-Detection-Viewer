@@ -28,10 +28,22 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         # List C/C++ source files with relative paths to this CMakeLists.txt.
         edgeviewer.cpp)
 
+# Include OpenCV headers
+include_directories(${CMAKE_SOURCE_DIR}/../OpenCV/include)
+
+# Add OpenCV shared library
+add_library(opencv_java4 SHARED IMPORTED)
+set_target_properties(opencv_java4 PROPERTIES
+        IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/../OpenCV/libs/${ANDROID_ABI}/libopencv_java4.so)
+
 # Specifies libraries CMake should link to your target library. You
 # can link libraries from various origins, such as libraries defined in this
 # build script, prebuilt third-party libraries, or Android system libraries.
-target_link_libraries(${CMAKE_PROJECT_NAME}
-        # List libraries link to the target library
-        android
-        log)
+target_link_libraries(
+        native-lib
+        opencv_java4
+        log
+)
+
+
