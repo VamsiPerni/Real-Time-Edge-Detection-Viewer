@@ -1,20 +1,21 @@
 package com.main.edgeviewer;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.TextView;
-
 import com.main.edgeviewer.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Used to load the 'edgeviewer' library on application startup.
+    // Load native library
     static {
         System.loadLibrary("edgeviewer");
     }
 
     private ActivityMainBinding binding;
+
+    // Native method declaration
+    public native String testOpenCV();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +24,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Example of a call to a native method
+        // Call OpenCV test function
         TextView tv = binding.sampleText;
-        tv.setText(stringFromJNI());
+        tv.setText(testOpenCV());
     }
-
-    /**
-     * A native method that is implemented by the 'edgeviewer' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
 }
